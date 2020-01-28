@@ -1,0 +1,107 @@
+/* 
+Simple Lines Loader
+Author : Nazmi Aydogdu - https://nazmi.grapheek.com 
+*/
+
+/* base code */
+*, *::before, *::after {
+	box-sizing: border-box;
+	outline: none;
+	padding: 0;
+	margin: 0;
+}
+
+html { 
+	font-size: 87.5%;
+	-webkit-text-size-adjust: 87.5%;
+	-ms-text-size-adjust: 87.5%;
+	scroll-behavior: smooth;
+}
+
+/* loader - horizontal style */
+@keyframes centered { 
+	0% {} 
+	25% { width: var(--baseval); } 
+	50% { width: var(--basewidth); } 
+	75%{ width: var(--baseval); } 
+	100% {} 
+}
+@keyframes toleft { 
+	0% { transform: var(--toleft); } 
+	25% { width: var(--baseval); } 
+	50% { transform: var( --fromleft); width: var(--basewidth); } 
+	75%{ width: var(--baseval); } 
+	100% { transform: var(--toleft); } 
+}
+@keyframes toright { 
+	0%{ transform: var(--toright); } 
+	25% { width: var(--baseval); } 
+	50% { transform: var( --fromright); width: var(--basewidth); } 
+	75%{ width: var(--baseval); } 
+	100% { transform: var(--toright); } 
+}
+@keyframes rotate-loop { 
+	0% { transform: rotate(0deg); } 
+	25% { width: var(--baseval); } 
+	50% { width: var(--basewidth); } 
+	75%{ width: var(--baseval); } 
+	100% { transform: rotate(360deg); } 
+}
+
+.loader-area {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	z-index: 99999;
+	background: aquamarine;
+	--fromleft: translateX(-1rem) translateY(-1.5rem);
+	--fromright: translateX(1rem) translateY(.5rem);
+	--toleft: translateX(1rem) translateY(-1.5rem);
+	--toright: translateX(-1rem) translateY(.5rem);
+	--basewidth: 6rem;
+	--baseval: 1rem;
+}
+.loader, .loader::before, .loader::after {
+	width: var(--basewidth);
+	height: var(--baseval);
+	background: #fff;
+	display: block;
+	border-radius: var(--baseval); margin: auto;
+	--anim-name: centered;
+	animation: 2s ease 0s normal none infinite running var(--anim-name);	
+}
+.loader::before, .loader::after {
+	content: '';
+	transform: var(--toleft);
+	--anim-name: toleft;
+}
+.loader::after {
+	transform: var(--toright);
+	--anim-name: toright;
+}
+
+/* loader - diagonal style */
+.loader.diagonal { transform: rotate(45deg); }
+
+/* loader - vertical style */
+.loader.vertical { transform: rotate(90deg); }
+
+/* loader - diagonal reverse style */
+.loader.diagonal-r { transform: rotate(135deg); }
+
+/* loader - animate a rotation loop */
+.loader.animate { 
+	--anim-name: rotate-loop; 
+}
+/* loader - keep lines aligned */
+.loader.align { 
+	--fromleft: translateY(-1.5rem);
+	--fromright: translateY(.5rem);
+	--toleft: var(--fromleft);
+	--toright: var(--fromright);
+}
